@@ -1,0 +1,54 @@
+import random
+# Unit 1: Elementary
+
+word_list = ["photographer", "journalist", "explorer", "filmmaker", "job", "occupation", "married", "single", "relationship", "wife"]
+def_list = ["A person who takes pictures with a camera", "A person who writes news stories", "A person who travels, usually to search for scientific or geographic information",
+            "A person who produces movies", "work that's paid", "another word for job", "having a husdand or wife", "not in a relationship",
+            "a connection between two people", "the title of a woman in a marriage"]
+
+# Variables to track points, number correct, number wrong, and how many times user asked for a hint
+right = 0
+wrong = 0
+check = 0
+hint = 0
+points = 0
+
+# Checks for a number input when asking how many rounds
+def roundcheck(rounds):
+    good_answer = 0
+    if rounds.isdigit():
+        good_answer = 1
+    else:
+        good_answer = 0
+    return good_answer
+        
+while check == 0:
+    rounds = input("How many words can you unscramble?")
+    check = roundcheck(rounds)
+    if check == 0:
+        print("Your answer is gibberish.  Try again.")
+    else:
+        rounds = int(rounds)
+
+# Core game program
+for i in range(0,rounds):
+    word = random.choice(word_list)
+    scrambled_word = ''.join(random.sample(word,len(word)))
+    print(scrambled_word)
+    answer = input("What is this word? (For a hint type '?')")
+    if answer == "?":
+        print(def_list[word_list.index(word)])
+        answer = input("What is this word? ")
+        hint += 1
+        points -= 1
+    if answer.lower() == word:
+        print("You win")
+        right += 1
+        points += 2
+    else:
+        print("You lose")
+        wrong += 1
+        points -= 2
+
+print (f"You got {right} right, {wrong} wrong, and used {hint} hints.")
+print(f"You scored {points} out of a possible {rounds*2} points.")
